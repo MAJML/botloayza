@@ -191,7 +191,16 @@ function analyzeIntent($message)
                     "No te preocupes, estoy aquí para ofrecerte ayuda."];
                     $claveAleatoria = array_rand($respuestas);
                     return $respuestas[$claveAleatoria];
-            } elseif (strpos($lowerMensaje, 'informacion') !== false || 
+            }elseif (strpos($lowerMensaje, 'como estas') !== false ||
+            strpos($lowerMensaje, 'como te encuentras') !== false) {
+                $respuestas = ["Estoy bien gracias por preocuparte, tienes alguna duda para poder ayudarte", 
+                "Me encuentro bien gracias por preocuparte",
+                "Todo está bien, gracias por preocuparte.",
+                "Me siento bien, gracias por tu interés.",
+                "Estoy bien, gracias por tu atención."];
+                $claveAleatoria = array_rand($respuestas);
+                return $respuestas[$claveAleatoria];
+            }  elseif (strpos($lowerMensaje, 'informacion') !== false || 
                     strpos($lowerMensaje, 'info') !== false ||
                     strpos($lowerMensaje, 'ayud') !== false ||
                     strpos($lowerMensaje, 'auxili') !== false ||
@@ -234,7 +243,8 @@ function analyzeIntent($message)
                 6 - ¿Qué es la plataforma Moodle?"];
                 $claveAleatoria = array_rand($respuestas);
                 return $respuestas[$claveAleatoria];
-            } elseif (strpos($lowerMensaje, 'matricularme') !== false && strpos($lowerMensaje, 'loayza') !== false) {
+            } elseif (strpos($lowerMensaje, 'matricul') !== false && strpos($lowerMensaje, 'loay') !== false ||
+            strpos($lowerMensaje, 'inscribi') !== false && strpos($lowerMensaje, 'loay') !== false) {
                 $_SESSION['chatbot-stado'] = 'matricula-loayza-confirmacion';
                 return "Por supuesto, hay turno mañana y turno tarde. ¿Deseas matricularte en Loayza? Responde 'sí' o 'no'.";
             } else {
