@@ -85,14 +85,14 @@
                 if (event.which === 13) {
                     var userMessage = userInput.val().trim();
                     if (userMessage !== "") {
-                        chatMessages.append('<div class="message user-message"><img src="user.png" alt="User">' + userMessage + '</div>');
+                        chatMessages.append('<div class="message user-message"><img src="img/user.png" alt="User">' + userMessage + '</div>');
                         $.ajax({
                             type: "POST",
                             url: "chatbot.php",
                             data: { message: userMessage },
                             success: function(response) {
                                 console.log(response);
-                                chatMessages.append('<div class="message bot-message"><img src="bot.png" alt="Bot"><div class="chat_bot">' + response + '</div></div>');
+                                chatMessages.append('<div class="message bot-message"><img src="img/bot.png" alt="Bot"><div class="chat_bot">' + response + '</div></div>');
                                 chatMessages.scrollTop(chatMessages.prop("scrollHeight"));
                             }
                         });
