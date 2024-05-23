@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #chat-container {
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        #chat-messages {
+            padding: 10px;
+            background-color: #e5ddd5;
+            height: 500px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .user-message {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #fff;
+            align-self: flex-start;
+        }
+        .message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        #user-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ddd;
+            box-sizing: border-box;
+            outline: none;
+        }
+        #user-input:focus {
+            border-top-color: #ccc;
+        }
+        .chat_bot{
+            display: flex !important;
+            flex-wrap: wrap;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Escribe aquí...">
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var chatMessages = $('#chat-messages');
+            var userInput = $('#user-input');
+            userInput.on('keypress', function(event) {
+                if (event.which === 13) {
+                    var userMessage = userInput.val().trim();
+                    if (userMessage !== "") {
+                        chatMessages.append('<div class="message user-message"><img src="user.png" alt="User">' + userMessage + '</div>');
+                        $.ajax({
+                            type: "POST",
+                            url: "chatbot.php",
+                            data: { message: userMessage },
+                            success: function(response) {
+                                console.log(response);
+                                chatMessages.append('<div class="message bot-message"><img src="bot.png" alt="Bot"><div class="chat_bot">' + response + '</div></div>');
+                                chatMessages.scrollTop(chatMessages.prop("scrollHeight"));
+                            }
+                        });
+                        userInput.val("");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
